@@ -1,27 +1,108 @@
-﻿<!doctype html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>CSS3图片展示效果 by zns</title>
-<script type="text/javascript" src="http://www.zhinengshe.com/js/main.js"></script>
-<script src="js/script.js" type="text/javascript"></script>
-<link href="style/common.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="http://js.tongji.linezing.com/2880049/tongji.js"></script><noscript><a href="http://www.linezing.com"><img src="http://img.tongji.linezing.com/2880049/tongji.gif"/></a></noscript>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#ul1{margin:0; padding:0; list-style:none; width:930px; position:relative; height:630px; margin: 20px auto;}
+#ul1 li{width:300px; height:200px; float:left; margin:5px;}
+#ul1 li img{width:100%; height:100%; }
+#hide{position:absolute; top:320px; left:50px;}
+#show{position:absolute; top:320px; right:50px;}
+#auto{position:absolute; top:20px; left:50px;}
+</style>
+<script src="move8-10.js"></script>
+<script>
+window.onload=function(){
+	var oUl=document.getElementById("ul1");
+	var aLi=oUl.children;
+	var oHide=document.getElementById("hide");
+	var oShow=document.getElementById("show");
+	var oAuto=document.getElementById("auto");
+	var arr=[];
+	var ready=true;
+	
+	for(var i=0; i<aLi.length; i++){
+		arr.push({width:aLi[i].offsetWidth, height:aLi[i].offsetHeight, left:aLi[i].offsetLeft, top:aLi[i].offsetTop, opacity:1});
+		aLi[i].style.left=arr[i].left+'px';
+		aLi[i].style.top=arr[i].top+'px';
+	}
+	for(var i=0; i<aLi.length; i++){
+		aLi[i].style.position='absolute';
+		aLi[i].style.margin=0;
+	}
+	oHide.onclick=function(){
+		if(!ready) return;
+		ready=false;
+		down();	
+	};
+	oAuto.onclick=function(){
+		if(!ready) return;
+		ready=false;
+		auto();	
+	};
+	oShow.onclick=function(){
+		if(!ready) return;
+		ready=false;
+		up();	
+	};
+	
+	function down(){
+		var i=aLi.length-1;
+		var timer=setInterval(function(){
+			var l=oUl.offsetWidth/2;
+			var t=oUl.offsetHeight;
+			move(aLi[i], {width:0, height:0, left:l, top:t, opacity:0},{fn:function(){ready=true}});
+			i--;
+			if(i==-1) clearInterval(timer);
+		}, 300);
+	};
+	
+	function auto(){
+		var i=aLi.length-1;
+		var timer=setInterval(function(){
+			var l=oUl.offsetWidth/2;
+			var t=oUl.offsetHeight;
+			(function(index){
+				move(aLi[i], {width:0, height:0, left:l, top:t, opacity:0}, {fn:function(){
+					if(index==0){
+						up();
+						ready=true;
+					};	
+				}});
+			})(i);
+			i--;
+			if(i==-1) clearInterval(timer);
+		}, 300);
+	};
+	
+	function up(){
+		var i=aLi.length-1;
+		var timer=setInterval(function(){
+			move(aLi[i], arr[i],{fn:function(){ready=true}});
+			i--;
+			if(i==-1) clearInterval(timer);
+		}, 300);	
+	};
+		
+};
+</script>
 </head>
 
 <body>
-<div class="znsCom" id="znsCom"></div>
-<div id="div1">
-	<div id="img"></div>
-	<div id="btns">
-		<input id="btn_explode" type="button" value="爆炸" class="btn_01" />
-		<input id="btn_tile" type="button" value="翻转" class="btn_02" />
-		<input id="btn_bars" type="button" value="扭曲"  class="btn_03" />
-		<input id="btn_cube" type="button" value="立方体" class="btn_04" />
-		<input id="btn_turn" type="button" value="翻页"  class="btn_05" />
-	</div>
-</div>
-<div id="burst">
-</div>
+<input type="button" value="自动" id="auto"/>
+<input type="button" value="收起" id="hide"/>
+<input type="button" value="显示" id="show"/>
+<ul id='ul1'>
+	<li><img src="img/0.JPG"/></li>
+    <li><img src="img/1.JPG"/></li>
+    <li><img src="img/2.JPG"/></li>
+    <li><img src="img/0.JPG"/></li>
+    <li><img src="img/1.JPG"/></li>
+    <li><img src="img/2.JPG"/></li>
+    <li><img src="img/0.JPG"/></li>
+    <li><img src="img/1.JPG"/></li>
+    <li><img src="img/2.JPG"/></li>
+</ul>
 </body>
 </html>
