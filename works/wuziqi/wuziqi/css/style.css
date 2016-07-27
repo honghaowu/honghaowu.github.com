@@ -1,0 +1,6 @@
+h3{width:200px;text-align: center; font:30px/1.2 '隶书'; margin:40px auto;}
+canvas{
+    display: block;
+    margin:0 auto;
+    box-shadow:-2px -2px 2px #efefef,5px 5px 5px #b9b9b9;
+}

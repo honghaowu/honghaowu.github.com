@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .tool_ico{width:100%; position:absolute; bottom:0; left:0; text-align:center;}
+        .tool_ico img{width:64px;}
+    </style>
+    <script>
+        window.onload=function(){
+            var oToolBox=document.getElementById('tool_ico');
+            var aIco=oToolBox.getElementsByTagName('img');
+            document.onmousemove=function(ev){
+                for(var i=0; i<aIco.length; i++){
+                    fnChangeIco(ev, aIco[i]);
+                }
+            }
+        };
+        function fnChangeIco(ev, obj){
+            var e=ev||event;
+            var x= obj.offsetLeft+obj.offsetWidth/2-e.clientX;
+            var y=obj.offsetTop+obj.offsetParent.offsetTop+obj.offsetHeight/2- e.clientY;
+            var dis=Math.sqrt(x*x+y*y);
+            var scale=1-dis/300;
+            if(scale<0.5) scale=0.5;
+           obj.style.width=scale*128+'px';
+        }
+    </script>
+</head>
+<body>
+    <div id="tool_ico" class="tool_ico">
+        <img src="ico/Bauble.ico"/>
+        <img src="ico/Dashboard.ico"/>
+        <img src="ico/Finder.ico"/>
+        <img src="ico/Mybook.ico"/>
+        <img src="ico/Safari.ico"/>
+    </div>
+</body>
+</html>

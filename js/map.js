@@ -1,0 +1,31 @@
+
+var map = new BMap.Map("map",{minZoom:10,maxZoom:40});    // 创建Map实例
+map.centerAndZoom(new BMap.Point(121.5346595,31.2109341), 13);  // 初始化地图,设置中心点坐标和地图级别
+map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+//map.setCurrentCity("上海");          // 设置地图显示的城市 此项是必须设置的
+map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+//地图控件
+map.addControl(new BMap.NavigationControl());
+map.addControl(new BMap.ScaleControl());
+map.addControl(new BMap.OverviewMapControl());
+map.addControl(new BMap.MapTypeControl());
+//var vectorMarker = new BMap.Marker(new BMap.Point(,), {
+var point = new BMap.Point(121.512212, 31.1421053);
+var marker = new BMap.Marker(point);
+map.addOverlay(marker);               // 将标注添加到地图中
+marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+var label = new BMap.Label("我在这里",{offset:new BMap.Size(20,-10)});
+marker.setLabel(label);
+var oAddress="<h4 style='margin:0 2px 5px 0;padding:0.2em 0;'>我的位置</h4>";
+var opts = {
+    width : 200,     // 信息窗口宽度
+    height: 20,     // 信息窗口高度
+    title : "我的位置:" , // 信息窗口标题
+    enableMessage:true,//设置允许信息窗发送短息
+    message:""
+};
+var sContent="<p style='margin:0;font-size:13px;line-height:20px;text-indent:2em'>上海市浦东新区永泰路468弄</p>";
+var infoWindow = new BMap.InfoWindow(sContent, opts);  // 创建信息窗口对象
+label.addEventListener("click", function(){
+    map.openInfoWindow(infoWindow,point); //开启信息窗口
+});

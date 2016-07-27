@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>同程网</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        var rem=32;
+        window.onresize= changeFont;
+        function changeFont(){
+            rem=32/320*document.documentElement.clientWidth;
+            document.documentElement.style.fontSize=rem+'px';
+        }
+        window.onload=function(){
+            changeFont();
+            //搜索框点击 获焦/失焦
+            var oSearchBox=document.querySelector('#search .searchBox');
+            var oSearchText=document.querySelector('#search .searchBox .searchText');
+            var oSearch=oSearchText.children[0];
+            oSearch.onfocus=function(){
+                //oSearchText.focus();
+                oSearch.placeholder='';
+            };
+            oSearch.onblur=function(){
+                oSearch.placeholder='目的地/酒店/景点/关键字';
+            };
+            //banner 自动无缝滚动切换
+
+            //banner 自动无缝滚动切换
+
+            var oBanUl=document.querySelector('#banner ul');
+            var aHead=document.querySelectorAll('#banner ol li');
+            var aLi=oBanUl.children;
+            var w=aLi[0].offsetWidth/rem;
+            var len=aLi.length;
+            var x = -w;
+            var n = 1;
+            oBanUl.style.width=len*w+'rem';
+            var bOk = false;
+            //拖拽
+            oBanUl.addEventListener("touchstart", function (ev) {
+                if (!bOk) {
+                    oBanUl.style.transition = "none";
+                    clearInterval(timer);
+                    var disX = ev.targetTouches[0].pageX / rem - x;
+                    bOk = true;
+                    function fnMove(ev) {
+                        x = ev.targetTouches[0].pageX / rem - disX;
+                        oBanUl.style.transform = "translateX(" + x + "rem)";
+                    }
+
+                    function fnEnd() {
+                        oBanUl.removeEventListener("touchmove", fnMove, false);
+                        oBanUl.removeEventListener("touchend", fnEnd, false);
+                        timer = setInterval(fnAutoPlay, 2000);
+                        n = Math.round(-x / w);
+                        oBanUl.style.transition = "0.5s all ease";
+                        x = -n * w;
+                        oBanUl.style.transform = "translateX(" + x + "rem)";
+
+
+                        //判断运动完成
+                        function tEnd() {
+                            oBanUl.style.transition = "none";
+                            oBanUl.removeEventListener("transitionend", tEnd, false);
+
+                            if (n == len - 1) {
+                                n = 1;
+//                                x = -n * w;
+//                                oBanUl.style.transform = "translateX(" + x + "rem)";
+                            } else if (n == 0) {
+                                n = len - 2;
+//                                x = -n * w;
+//                                oBanUl.style.transform = "translateX(" + x + "rem)";
+                            }
+                            for (var i = 0; i < aHead.length; i++) {
+                                aHead[i].className = '';
+                                aHead[n - 1].className = 'active';
+                            }
+                            bOk = false;
+                        }
+
+                        oBanUl.addEventListener("transitionend", tEnd, false);
+                    }
+
+                    oBanUl.addEventListener("touchmove", fnMove, false);
+                    oBanUl.addEventListener("touchend", fnEnd, false);
+
+                    ev.preventDefault();
+                }
+            }, false);
+
+            var timer=setInterval(fnAutoPlay,1000);
+            function fnAutoPlay() {
+                x = -(n + 1) * w;
+                oBanUl.style.transition = "0.3s all ease";
+                oBanUl.style.transform = "translateX(" + x + "rem)";
+                for (var i = 0; i < aHead.length; i++) {
+                    aHead[i].className = '';
+                    aHead[n % 6].className = 'active';
+                }
+
+                oBanUl.addEventListener("transitionend", transEnd, false);
+                function transEnd() {
+                    oBanUl.style.transition = "none";
+                    oBanUl.removeEventListener("transitionend", transEnd, false);
+                    if (n == len - 1) {
+                        n = 1;
+                        x = -n * w;
+                        oBanUl.style.transform = "translateX(" + x + "rem)";
+                    }
+                }
+                n++;
+            }
+
+            //导航滑动切换
+            var oDiv = document.getElementById("nav");
+            var oUl  = oDiv.children[0];
+            var aL  = oUl.children;
+            var le  = aLi.length;
+            var aH=oDiv.querySelectorAll('ol li');
+
+            var x2 = 0;//rem
+            //拖拽
+            oUl.addEventListener("touchstart",function(ev){
+                oUl.style.transition = "none";
+                var disX = ev.targetTouches[0].pageX/rem - x2;
+
+                function fnMove(ev){
+                    //oUl.style.left = ev.targetTouches[0].pageX - disX + "px";
+                    x2 = ev.targetTouches[0].pageX/rem - disX;
+                    if(x2>0) x2=0;
+                    if(x2<-(oUl.offsetWidth/2)/rem) x2=-(oUl.offsetWidth/2)/rem;
+                    oUl.style.transform = "translateX("+x2+"rem)";
+                }
+
+                function fnEnd(){
+                    oUl.removeEventListener("touchmove",fnMove,false);
+                    oUl.removeEventListener("touchend",fnEnd,false);
+                    var n=Math.round(-x2/(oUl.offsetWidth/2/rem));
+                    console.log(n);
+                    for(var i=0; i<aH.length; i++){
+                        aH[i].classList.remove('cur');
+                    }
+                    aH[n].classList.add('cur');
+                    x2=-n*(oUl.offsetWidth/2/rem);
+                    oUl.style.transition='1s all ease';
+                    oUl.style.transform = "translateX("+x2+"rem)";
+                }
+
+                oUl.addEventListener("touchmove",fnMove,false);
+                oUl.addEventListener("touchend",fnEnd,false);
+
+                ev.preventDefault();
+            },false);
+
+
+            //抢购时间动态变化
+            var d=24*60*60;
+            var oH=document.getElementById('hour');
+            var oM=document.getElementById('min');
+            var oS=document.getElementById('sec');
+            setInterval(function(){
+                var h=parseInt(d/3600);
+                var m=parseInt((d%3600)/60);
+                var s=(d%3600)%60;
+                oH.innerHTML=h;
+                oM.innerHTML=m;
+                oS.innerHTML=s;
+                d--;
+            },1000);
+        }
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <div id="top">
+                <div id="search" class="clearfix">
+                    <div class="leftNav fl">
+                        <a>上海</a>
+                        <i class="down_ico"></i>
+                    </div>
+                    <div class="searchBox fl">
+                        <i class="zoom"></i>
+                        <div class="searchText">
+                            <input type="search" placeholder="目的地/酒店/景点/关键字" />
+                        </div>
+                    </div>
+                    <a class="login"></a>
+                </div>
+            </div>
+            <div id="banner">
+                <ul>
+                    <li><img src="images/6.jpg" alt="bannerPic"/></li>
+                    <li><img src="images/1.jpg" alt="bannerPic"/></li>
+                    <li><img src="images/2.jpg" alt="bannerPic"/></li>
+                    <li><img src="images/3.jpg" alt="bannerPic"/></li>
+                    <li><img src="images/4.jpg" alt="bannerPic"/></li>
+                    <li><img src="images/5.jpg" alt="bannerPic"/></li>
+                    <li><img src="images/6.jpg" alt="bannerPic"/></li>
+                    <li><img src="images/1.jpg" alt="bannerPic"/></li>
+
+                </ul>
+                <ol>
+                    <li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ol>
+            </div>
+        </div>
+        <div id="content">
+            <div id="nav">
+                <ul>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/Tu2jo1.png"/>
+                            <span>周边游</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/pa89n1.png"/>
+                            <span>国内游</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/gF77va.png"/>
+                            <span>出境游</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/kCQ2bA.png"/>
+                            <span>邮轮</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/pKTyUS.png"/>
+                            <span>当地玩乐</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/JXSw7y.png"/>
+                            <span>国际机票</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/6bmfWo.png"/>
+                            <span>定制旅游</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/npCxWO.png"/>
+                            <span>主题游</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/k6aFga.png"/>
+                            <span>景点门票</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/2yqVc6.png"/>
+                            <span>酒店客栈</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/IYDAo1.png"/>
+                            <span>机票</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/dF3Sm0.png"/>
+                            <span>火车票</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/7aPjOm.png"/>
+                            <span>同程专线</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/q6udM9.png"/>
+                            <span>微社区</span>
+                        </a>
+                    </li>
+                </ul>
+                <ol>
+                    <li class="cur"></li>
+                    <li></li>
+                </ol>
+            </div>
+            <div id="serverTip">
+                <ul>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/a.png" alt="tipPic"/>
+                            <span>电影票</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/b.png" alt="tipPic"/>
+                            <span>巴士跟团</span>
+                        </a>
+                    </li>
+                    <li class="last">
+                        <a href="javascript:;">
+                            <img src="images/c.png" alt="tipPic"/>
+                            <span>汽车票</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/d.png" alt="tipPic"/>
+                            <span>海外玩乐</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/e.png" alt="tipPic"/>
+                            <span>签证</span>
+                        </a>
+                    </li>
+                    <li class="last">
+                        <a href="javascript:;">
+                            <img src="images/f.png" alt="tipPic"/>
+                            <span>全球wifi</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="hot">
+                <div class="title">
+                    <h3><i class="clockIco"></i>限时抢购</h3>
+                    <p><span>距离结束</span><b id="hour">24</b><span>:</span><b id="min">00</b><span>:</span><b id="sec">00</b><i class="ico"></i></p>
+                </div>
+                <div class="saleBox">
+                    <div class="picShow">
+                        <img src="images/picShow.jpg"/>
+                    </div>
+                    <div class="info">
+                        <h4>【亲子游限量50套】1大1小畅游上海迪士尼乐园迪士尼，入住上海鸿锦国...</h4>
+                        <p class="price"><i>¥</i><i class="big">998</i>起</p>
+                        <p class="limit">仅限<i>50</i>份<span class="more">更多抢购<i class="ico2"></i></span></p>
+
+                    </div>
+                </div>
+            </div>
+            <div id="activity">
+                <ul class="activity1 clearfix">
+                    <li><a href="javascript:;"><img src="images/active1.jpg"/></a></li>
+                    <li class="clmr"><a href="javascript:;"><img src="images/active2.jpg"/></a></li>
+                    <li><a href="javascript:;"><img src="images/active3.jpg"/></a></li>
+                    <li class="clmr"><a href="javascript:;"><img src="images/active4.jpg"/></a></li>
+                </ul>
+                <ul class="activity2 clearfix">
+                    <li><a href="javascript:;"><img src="images/active5.jpg"/></a></li>
+                    <li><a href="javascript:;"><img src="images/active6.jpg"/></a></li>
+                    <li><a href="javascript:;"><img src="images/active7.jpg"/></a></li>
+                    <li class="clmr"><a href="javascript:;"><img src="images/active8.jpg"/></a></li>
+                </ul>
+            </div>
+            <div id="hotPlace">
+                <h3><i class="fire"></i>热门目的地</h3>
+                <ul>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/guangzhou.jpg" alt="广州"/>
+                            <h4>广州</h4>
+                            <p>亲子时尚之都</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/xiamen.jpg" alt="厦门"/>
+                            <h4>厦门</h4>
+                            <p>一起私奔到厦门</p>
+                        </a>
+                    </li>
+                    <li class="clearMarR">
+                        <a href="javascript:;">
+                            <img src="images/lijiang.jpg" alt="丽江"/>
+                            <h4>丽江</h4>
+                            <p>彩云之南</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/hanguo.jpg" alt="韩国"/>
+                            <h4>韩国</h4>
+                            <p>邂逅清新浪漫</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <img src="images/riben.jpg" alt="日本"/>
+                            <h4>日本</h4>
+                            <p>感受日式风情</p>
+                        </a>
+                    </li>
+                    <li class="clearMarR">
+                        <a href="javascript:;">
+                            <img src="images/morehotP.png" alt="更多"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="link">
+                <ul>
+                    <li><a href="javascript:;"><img src="images/link1.png" alt="客服"/></a></li>
+                    <li><a href="javascript:;"><img src="images/link2.png" alt="mobile客户端"/></a></li>
+                    <li><a href="javascript:;"><img src="images/link3.png" alt="PC"/></a></li>
+                    <li><a href="javascript:;"><img src="images/link4.png" alt="我的同程"/></a></li>
+                </ul>
+            </div>
+            <p class="copyright">©2016同程旅游</p>
+        </div>
+    </div>
+</body>
+</html>

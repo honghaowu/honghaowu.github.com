@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            width:100px;
+            height:100px;
+            position: absolute;
+            top:0;
+            left:0;
+            border-radius: 50%;
+            font:bold 20px/100px 'Arial';
+            text-align:center;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            for(var i=0; i<10; i++){
+                    setTimeout(createBox,Math.random()*5000);
+            }
+            //Drag(oDiv);
+            //move(oDiv);
+            function createBox(){
+                var r=rnd(0,256);
+                var b=rnd(0,256);
+                var g=rnd(0,256);
+                var sPeedX=rnd(1,30);
+                var sPeedY=rnd(1,30);
+
+                var oDiv=document.createElement('div');
+                oDiv.className='box';
+                oDiv.innerHTML=rnd(0,10);
+                oDiv.style.background='rgb('+r+','+g+','+b+')';
+                document.body.appendChild(oDiv);
+                move(oDiv, sPeedX, sPeedY);
+                Drag(oDiv);
+            }
+            function move(obj, sPeedX, sPeedY){
+                clearInterval(obj.timer);
+                obj.timer=setInterval(function(){
+                    sPeedY+=3;
+                    var l=obj.offsetLeft+sPeedX;
+                    var t=obj.offsetTop+sPeedY;
+                    if(l<0){
+                        l=0;
+                        sPeedX*=-.8;
+                        sPeedY*=.8;
+                    }else if(l>document.documentElement.clientWidth-obj.offsetWidth){
+                        l=document.documentElement.clientWidth-obj.offsetWidth;
+                        sPeedX*=-.8;
+                        sPeedY*=.8;
+                    }
+                    if(t<0){
+                        t=0;
+                        sPeedY*=-.8;
+                        sPeedX*=.8;
+                    }else if(t>document.documentElement.clientHeight-obj.offsetHeight){
+                        t=document.documentElement.clientHeight-obj.offsetHeight;
+                        sPeedY*=-.8;
+                        sPeedX*=.8;
+                    }
+                    if(Math.abs(sPeedX)<1) sPeedX=0;
+                    if(Math.abs(sPeedY)<1) sPeedY=0;
+                    if(sPeedX==0 && sPeedY==0 && t==document.documentElement.clientHeight-obj.offsetHeight){
+                        clearInterval(obj.timer);
+                    }
+                    obj.style.left=l+'px';
+                    obj.style.top=t+'px';
+                }, 30);
+            }
+            function Drag(obj){
+                obj.onmousedown=function(ev){
+                    clearInterval(obj.timer);
+                    var lastX=0;
+                    var lastY=0;
+                    var sPeedX=0;
+                    var sPeedY=0;
+                    var e=ev||event;
+                    var disX= e.clientX-obj.offsetLeft;
+                    var disY= e.clientY-obj.offsetTop;
+                    document.onmousemove=function(ev){
+                        var e=ev||event;
+                        var l=e.clientX-disX;
+                        var t=e.clientY-disY;
+                        obj.style.left=l+'px';
+                        obj.style.top= t+'px';
+                        sPeedX=l-lastX;
+                        sPeedY=t-lastY;
+                        lastX=l;
+                        lastY=t;
+                    };
+                    document.onmouseup=function(){
+                        document.onmousemove=null;
+                        document.onmouseup=null;
+                        move(obj, sPeedX, sPeedY);
+                    };
+                    return false;
+                }
+            }
+            function rnd(m,n){
+                return parseInt(Math.random()*(n-m)+m);
+            }
+        };
+
+    </script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>

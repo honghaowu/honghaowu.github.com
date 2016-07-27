@@ -1,0 +1,113 @@
+﻿
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="html5,本地存储" />
+    <meta name="description" content="Helloweba演示平台，演示XHTML、CSS、jquery、PHP案例和示例" />
+    <title>微信大转盘源码</title>
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+    <style type="text/css">
+    .demo{width:509px; height:509px; position:relative;margin: 50px auto;}
+    #disk{width:509px; height:509px; background:url(luck/zp.png) no-repeat;position:absolute;top:0;left:0}
+    #start{width:163px; height:320px; position:absolute; cursor: pointer;top:95px;left:172px;}
+    #start img{cursor: pointer;position: absolute;top:0;left:0;*left:-107px}
+    </style>
+    <script type="text/javascript" src="luck/jquery.js"></script>
+    <script type="text/javascript" src="luck/jQueryRotate.2.2.js"></script>
+    <script type="text/javascript" src="luck/jquery.easing.min.js"></script>
+    <script type="text/javascript">
+        /*$(function () {
+            $("#startbtn").click(function () {
+                lottery();
+            });
+        });
+        function lottery() {
+
+            var mes = "100|你的中奖提示语,其中指针停靠的位置需你写程序控制"; //从后台通过ajax获取的数据
+            var a = parseInt(mes.split("|")[0]); //角度 
+            var p = mes.split("|")[1]; //奖项 
+            $("#startbtn").rotate({
+                duration: 5000, //转动时间 
+                angle: 0,
+                animateTo: 1441 + a, //转动角度 
+                easing: $.easing.easeOutSine,
+                callback: function () {
+                    alert(p);
+                }
+            });
+
+        }*/
+        window.onload=function(){
+            var oBtn=document.querySelector('#startbtn');
+            var bOK=false;
+            var arr=['三等奖','再接再厉','再接再厉','一等奖','再接再厉','三等奖','再接再厉','再接再厉'];
+            var angel=360/8;
+            oBtn.onclick=function(){
+                if(bOK) return;
+                bOK=true;
+                clearInterval(oBtn.timer);
+                var a=rnd(15,28);
+                console.log(a);
+                var n=Math.floor(a/angel);
+                console.log(n);
+                n%=8;
+                move(oBtn,a,function(){
+                    bOK=false;
+                    alert(arr[n]);
+                    //alert(n);
+                    setTimeout(function(){
+                        oBtn.style.WebkitTransform='rotate(0deg)';
+                        oBtn.style.MozTransform='rotate(0deg)';
+                        oBtn.style.MsTransform='rotate(0deg)';
+                        oBtn.style.transform='rotate(0deg)';
+                    },300);
+                });
+            };
+            function move(obj,iTarget,fn){
+                var start=0;
+                var count=parseInt(2000/30);
+                var dis=iTarget-start;
+                var n=0;
+                obj.timer=setInterval(function(){
+                    n++;
+                    var a=1-n/count;
+                    var cur=start+dis*(1-a*a*a);
+                    obj.style.WebkitTransform='rotate('+cur+'deg)';
+                    obj.style.MozTransform='rotate('+cur+'deg)';
+                    obj.style.MsTransform='rotate('+cur+'deg)';
+                    obj.style.transform='rotate('+cur+'deg)';
+                    if(n==count){
+                        clearInterval(obj.timer);
+                        fn();
+                    }
+                },30);
+            }
+            function rnd(n,m){
+                return Math.floor((Math.random()*(m-n)+n)*angel);
+            }
+        };
+
+    </script>
+</head>
+<body>
+
+    <div id="header">
+   
+</div>
+
+<div id="main">
+   <div class="msg"></div>
+   <div class="demo">
+        <div id="disk"></div>
+        <div id="start"><img src="luck/start.png" id="startbtn"></div>
+   </div>
+   
+</div>
+
+
+<div id="footer">
+    
+</div>
+
+</body>
+</html>

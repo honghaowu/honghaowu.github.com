@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            background:#000;
+            overflow: hidden;
+        }
+        #c1{
+            background:#000;
+        }
+    </style>
+    <script>
+        function rnd(n,m){
+            return Math.floor(Math.random()*(m-n)+n);
+        }
+        window.onload=function(){
+            var oC=document.getElementById('c1');
+            var gd=oC.getContext('2d');
+            /*gd.fillStyle='#fff';*/
+            var N=5;
+            var aPoint=[];
+            var winW=window.innerWidth;
+            var winH=document.documentElement.clientHeight;
+            var oldPos=[];//[]
+
+            oC.width=winW;
+            oC.height=winH;
+            for(var i=0; i<N; i++){
+                aPoint.push({
+                    w:1,
+                    h:1,
+                    x:rnd(0, winW),
+                    y:rnd(0, winH),
+                    speedX:rnd(-10,10),
+                    speedY:rnd(-10,10)
+                });
+            }
+
+            setInterval(function(){
+                gd.clearRect(0,0,oC.width,oC.height);
+                for(var i=0; i<N; i++){
+                    aPoint[i].x+=aPoint[i].speedX;
+                    aPoint[i].y+=aPoint[i].speedY;
+                    if(aPoint[i].x<=0||aPoint[i].x>winW) aPoint[i].speedX*=-1;
+                    if(aPoint[i].y<=0||aPoint[i].y>winH) aPoint[i].speedY*=-1;
+                    drawPoint(aPoint[i]);
+                }
+                gd.beginPath();
+                gd.moveTo(aPoint[0].x,aPoint[0].y);
+                for(var i=1; i<N; i++){
+                    gd.lineTo(aPoint[i].x,aPoint[i].y);
+                }
+                gd.closePath();
+                gd.stroke();
+                //存路径
+                var arr=[];
+                for(var i=0; i<N; i++){
+                    arr.push({x:aPoint[i].x, y:aPoint[i].y});
+                }
+                oldPos.push(arr);
+                console.log(oldPos.length);
+                while(oldPos.length>20){
+                    oldPos.shift();
+                }
+
+                for(var i=0; i<oldPos.length; i++){
+                    gd.beginPath();
+                    gd.moveTo(oldPos[i][0].x,oldPos[i][0].y);
+                    for(var j=1; j<N; j++){
+                        gd.lineTo(oldPos[i][j].x,oldPos[i][j].y);
+                    }
+                    gd.closePath();
+                    var opacity=i/oldPos.length;
+                    gd.strokeStyle='rgba(255,0,0,'+opacity+')';
+                    gd.stroke();
+                }
+            },30);
+            function drawPoint(p){
+                gd.fillStyle='#fff';
+                gd.fillRect(p.x, p.y, p.w, p.h);
+                gd.strokeRect(p.x, p.y, p.w, p.h);
+            }
+        }
+    </script>
+</head>
+<body>
+    <canvas id="c1">你的浏览器不支持HTML5，需要升级</canvas>
+</body>
+</html>

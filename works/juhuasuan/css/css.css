@@ -1,0 +1,344 @@
+*{
+    margin:0;
+    padding:0;
+    list-style:none;
+    text-decoration: none;
+}
+html{
+    font-size:32px;
+}
+.wrap{
+    width:10rem;
+    margin:0 auto;
+}
+.head{
+    width:100%;
+    height:1.5625rem;
+    background:#fafafa;
+    position:relative;
+}
+.head .btn_back{
+    width:1.90625rem;
+    height:0.90625rem;
+    position: absolute;
+    background:url(../image/btn_back.png) no-repeat;
+    background-size:100% 100%;
+    top:0.375rem;
+    left:0.375rem;
+    text-indent: -9999rem;
+}
+.head .logo{
+    width:2.3125rem;
+    height:0.625rem;
+    background:url("../image/logo.png") no-repeat;
+    background-size:100% 100%;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-left: -1.15625rem;;
+    margin-top: -0.3125rem;
+}
+.banner{
+    height: 4.65625rem;
+    position:relative;
+}
+.banner ul{
+    width: 2000rem;
+}
+.banner ul li{
+    width:10rem;
+    height:4.1875rem;
+    float:left;
+}
+.banner ul li img{
+    width:100%;
+}
+.banner ol{
+    width:1.40625rem;
+    height:0.15625rem;
+    position:absolute;
+    bottom:0;
+    left:50%;
+    margin-left:-0.71875rem;
+}
+.banner ol li{
+    width:0.15625rem;
+    height:0.15625rem;
+    border-radius:50%;
+    background:#a9a9a9;
+    float:left;
+    margin-right:0.15625rem;
+}
+.banner ol li:nth-last-child(1){
+    margin-right:0;
+    background:#ff4300;
+}
+.nav{
+    width:10rem;
+    height:5.6875rem;
+}
+.nav ul{
+    width:9.5rem;
+    height:5rem;
+    margin:0.34375rem 0.25rem;
+}
+.nav ul li{
+    width:1.25rem;
+    height:1.875rem;
+    margin:0.3125rem 0.5625rem;
+    float: left;
+}
+.nav ul li img{
+    width:100%;
+}
+.content{
+    width:9.375rem;
+    margin:0 0.3125rem;
+}
+.content .hot .title{
+    width:100%;
+    height:1.1875rem;
+    border-bottom:0.125rem solid #dcdcdc;
+    position: relative;
+}
+.content .hot .title h3{
+    font:0.375rem/1.1875rem '微软雅黑';
+}
+.content .hot .title .bg{
+    float: left;
+    width:0.0625rem;
+    height:0.46875rem;
+    background:url('../image/hot_border.png') no-repeat;
+    background-size:100% 100%;
+    position: absolute;
+    top:50%;
+    margin-top:-0.25rem;
+    left:0;
+}
+.content .hot .title .left{
+    width:3.59375rem;
+    text-align: center;
+    float:left;
+}
+.content .hot .title .right{
+    float:right;
+}
+.content .product_list{
+
+}
+.content .product_list ul{
+    width:100%;
+    padding-top:0.15625rem;
+}
+.content .product_list ul li{
+    width:100%;
+    height:1.875rem;
+    margin-top: 0.3125rem;
+}
+.content .product_list ul li .num{
+    width:0.9375rem;
+    height:1.875rem;
+    text-align: center;
+    color:#fff;
+    font:bold 0.75rem/1.875rem '微软雅黑';
+    float: left;
+}
+.content .product_list ul li .No1{
+    background:#e00202;
+}
+.content .product_list ul li .No2{
+    background:#ff4800;
+}
+.content .product_list ul li .No3{
+    background:#ff7300;
+}
+.content .product_list ul li .No4{
+    background:#ff9d00;
+}
+.content .product_list ul li .No5{
+    background:#ffa800;
+}
+.content .product_list ul li .No6{
+    background:#ffb400;
+}
+.content .product_list ul li .No7{
+    background:#ffba00;
+}
+.content .product_list ul li .No8{
+    background:#fcd000;
+}
+.content .product_list ul li .No9{
+    background:#ffd719;
+}
+.content .product_list ul li .No10{
+    background:#ffe152;
+}
+.content .product_list ul li a{
+    width:2.8125rem;
+    height:1.875rem;
+    float: left;
+}
+.content .product_list ul li img{
+    width:100%;
+}
+.content .product_list ul li .info{
+    width:5.625rem;
+    height:100%;
+    background:#f4f4f4;
+    float: right;
+    font-size: 0.375rem;
+    position:relative;
+}
+.pro_info{
+    width:2.1875rem;
+    height:0.9375rem;
+    float:left;
+    margin:0.46875rem 0.375rem;
+    color: #999;
+}
+.pro_info .sale{
+    display: block;
+}
+.pro_info .discount{
+    display: block;
+}
+.pro_info .discount em{
+    color:#d51938;
+    font-style: normal;
+}
+.pro_info .discount b{
+    text-decoration: line-through;
+    font-weight: normal;
+}
+.price{
+    width:2.6875rem;
+    height:1.875rem;
+    text-align: center;
+    float: right;
+    font:bold 0.4375rem/1.875rem '微软雅黑';
+    color:#d51938;
+}
+.info .ico{
+    width:0.21875rem;
+    height:0.34375rem;
+    position: absolute;
+    top:50%;
+    margin-top:-0.1875rem;
+    right:0.3125rem;
+    background:url("../image/ico.png") no-repeat;
+    background-size: 100% 100%;
+}
+.content .more_list{
+    width:100%;
+    height:7.0625rem;
+}
+.more{
+    width:100%;
+    height:1.25rem;
+    text-align: center;
+    background:#f5f5f5;
+    font:bold 0.4375rem/1.25rem '微软雅黑';
+    margin:0.3125rem 0;
+}
+.content .more_list .list{
+    height:5.5rem;
+}
+.content .more_list .list .left{
+    width:2.34375rem;
+    height:5.5rem;
+    float: left;
+}
+.content .more_list .list .left img{
+    width:100%;
+}
+.content .more_list .list ul{
+    width:7.03125rem;
+    height:5.5rem;
+    float: right;
+}
+.content .more_list .list ul li{
+    width:2.34375rem;
+    height:1.375rem;
+    border:0.03125rem solid #eeeeee;
+    box-sizing: border-box;
+    float: left;
+    text-align: center;
+    font:0.4375rem/1.375rem '微软雅黑';
+}
+.content .more_list .list ul li a{
+    color:#b4b4b4;
+}
+.content .more_list .list ul li.active a{
+    color:#d51942;
+}
+.content .app_list{
+    width:100%;
+    height:2.5rem;
+    margin:0.34375rem 0 0.28125rem 0;
+}
+.content .app_list ul{
+   width:100%;
+}
+.content .app_list ul li{
+    width:33%;
+    float: left;
+}
+.content .app_list ul li a{
+    width:100%;
+    height:100%;
+    display: block;
+}
+.content .app_list ul li a img{
+    width:100%;
+}
+.foot{
+    width:10rem;
+}
+.foot .login{
+    width:100%;
+    background:#f8f8f8;
+    height:1.375rem;
+    font:bold 0.375rem/1.375rem '微软雅黑';
+    position:relative;
+}
+.foot .login a{
+    margin:0 0.53125rem;
+    float: left;
+}
+.foot .login a.top{
+    float: right;
+    margin-right:1rem;
+}
+.foot .login .top_ico{
+    width:0.28125rem;
+    height:0.15625rem;
+    background:url("../image/ico1.png") no-repeat;
+    background-size:100% 100%;
+    position:absolute;
+    top:50%;
+    margin-top:-0.15625rem;
+    right:0.625rem;
+}
+.foot .copyright{
+    width:100%;
+    height:1.9375rem;
+    padding: 0.1875rem 0 0.1875rem 0;
+    background:#eeeeee;
+}
+.foot .copyright .versions{
+    width:3.375rem;
+    margin:0 auto;
+}
+.foot .copyright a{
+    width:50%;
+    height:1.375rem;
+    text-align:center;
+    color: #000;
+    font:bold 0.375rem/1.375rem '微软雅黑';
+}
+.foot .copyright .server{
+    width:100%;
+    text-align: center;
+    font:0.375rem '微软雅黑';
+    color:#aeaeae;
+}

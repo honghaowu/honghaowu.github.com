@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap_watch{width:100%;height:400px;background:#000; margin:0 auto;position: relative;}
+        #watch{background:#000;position: absolute; top:50%;left:50%;margin-top:-150px;margin-left:-150px;}
+    </style>
+    <script>
+        window.onload=function(){
+            var oWatch=document.getElementById('watch');
+            var gd=oWatch.getContext('2d');
+            gd.font='20px Arial';
+            gd.fillStyle='#fff';
+            var sTitle='智能手表';
+            var wTitle=gd.measureText(sTitle).width;
+            //strokeArc(150,150,20,0,90,'red');
+            setInterval(function(){
+                gd.clearRect(0,0,oWatch.width,oWatch.height);
+                gd.fillText(sTitle,150-wTitle/2,20);
+                var date=new Date();
+                var h=date.getHours();
+                var m=date.getMinutes();
+                var s=date.getSeconds();
+                var ms=date.getMilliseconds();
+                var oh=h*30+m/60*6;
+                var om=m*6+s/60*6;
+                var os=s*6+ms/1000*6;
+                strokeArc(150,150,60,0,oh%360,'blue');
+                strokeArc(150,150,80,0,om,'green');
+                strokeArc(150,150,100,0,os,'red');
+                var str=addZero(h)+':'+addZero(m)+':'+addZero(s);
+                var wText=gd.measureText(str).width;
+                gd.fillText(str,150-wText/2,150+10);
+            },1);
+            function strokeArc(cx,cy,r,s,e,color){
+                s-=90;
+                e-=90;
+                gd.lineWidth='20';
+                gd.strokeStyle=color;
+                gd.beginPath();
+                gd.arc(cx,cy,r,d2a(s),d2a(e));
+                gd.stroke();
+            }
+            function d2a(n){
+                return n*Math.PI/180;
+            }
+            function addZero(n){
+                return n<10?'0'+n:''+n;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="wrap_watch">
+        <canvas width="300" height="300" id="watch">您的浏览器不支持HTML5，需要更新!</canvas>
+    </div>
+</body>
+</html>

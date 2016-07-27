@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1{width:600px; height:400px; background:#ccc; margin:0 auto; position:relative;}
+#ul1{width:2200px; height:179px; position:absolute; top:110px; left:0; margin:0; padding:0;}
+#ul1 li{width:260px; height:179px; background:#0CC; float:left; list-style:none; position:relative;}
+#ul1 li img{width:260px; height:179px; position:absolute;}
+</style>
+<script>
+window.onload=function(){
+	var oDiv=document.getElementById("div1");
+	var oUl=document.getElementById("ul1");
+	var aLi=oUl.children;
+	var aImg=oUl.getElementsByTagName('img');
+	//拖拽ul
+	oUl.onmousedown=function(ev){
+		var oEvt=ev||event;
+		var disX=oEvt.clientX-oUl.offsetLeft;
+		document.onmousemove=function(ev){
+			var oEvt=ev||event;
+			var l=oEvt.clientX-disX;
+			if(l>oDiv.offsetWidth/2-(0+0.5)*aLi[0].offsetWidth) l=oDiv.offsetWidth/2-(0+0.5)*aLi[0].offsetWidth;
+			if(l<oDiv.offsetWidth/2-(aLi.length-1)*aLi[0].offsetWidth) l=oDiv.offsetWidth/2-(aLi.length-1+0.5)*aLi[0].offsetWidth;
+			oUl.style.left=l+'px';
+			setSize();
+		};
+		document.onmouseup=function(){
+			document.onmouseup=document.onmousemove=null;
+			oUl.relaseCapture&&oUl.relaseCapture();
+		};
+		oUl.setCapture&&oUl.setCapture();
+		return false;	
+	};
+	setCenter(1);
+	 setSize();
+	//2、设置中心点
+		function setCenter(n){
+			var l=oDiv.offsetWidth/2-(n+0.5)*aLi[0].offsetWidth;
+			oUl.style.left=l+'px';	
+		};
+	//
+	
+	//
+	function setSize(){
+		for(var i=0; i<aLi.length; i++){
+			//计算
+			var dis=(oDiv.offsetWidth/2)-(oUl.offsetLeft+aLi[i].offsetLeft+aLi[i].offsetWidth/2);
+			//计算比例尺
+			dis=Math.abs(dis);
+			var scale=1-dis/800;
+			if(scale<0.5) scale=0.5;
+			//图片变大
+			aImg[i].style.width=520*scale+'px';
+			aImg[i].style.height=358*scale+'px';
+			aImg[i].style.marginLeft=-(aImg[i].offsetWidth-aLi[i].offsetWidth)/2+'px';
+			aImg[i].style.marginTop=-(aImg[i].offsetHeight-aLi[i].offsetHeight)/2+'px';
+			aLi[i].style.zIndex=parseInt(scale*10000);
+		}
+	}
+	
+};
+</script>
+</head>
+
+<body>
+<div id="div1">
+	<ul id="ul1">
+    	<li><img src="img3/1.jpg"/></li>
+        <li><img src="img3/2.jpg"/></li>
+        <li><img src="img3/3.jpg"/></li>
+        <li><img src="img3/4.jpg"/></li>
+        <li><img src="img3/5.jpg"/></li>
+        <li><img src="img3/6.jpg"/></li>
+        <li><img src="img3/7.jpg"/></li>
+        <li><img src="img3/8.jpg"/></li>
+    </ul>
+</div>
+</body>
+</html>

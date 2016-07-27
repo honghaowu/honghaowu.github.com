@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>3Dcricle</title>
+<style>
+	body{margin:0; padding:0; background:#000; height:100%;}
+	.wrap{ margin:150px auto;  width:400px; height:400px; }
+	.ball{width:400px; height:400px; position:relative; transform-style:preserve-3d;-webkit-transform-style:preserve-3d; perspective:1400px;-webkit-perspective:1400px; -webkit-animation:rotateBall 3s linear 0s infinite;-moz-animation:rotateBall 3s linear 0s infinite;animation:rotateBall 3s linear 0s infinite;}
+	.ball:after{width:3px; height:500px; position:absolute;background:#fff; display:block; content:''; left:200px; top:-50px;}
+	.ball div{width:300px; height:300px; border:3px solid #fff; border-radius:50%; position:absolute; top:50px; left:50px;}
+	.ball .line_1{border-color:#ff0; -webkit-transform:rotateY(0deg);-moz-transform:rotateY(0deg);-ms-transform:rotateY(0deg);transform:rotateY(0deg);}
+	.ball .line_2{border-color:#00f; -webkit-transform:rotateY(36deg);-moz-transform:rotateY(36deg);-ms-transform:rotateY(36deg);transform:rotateY(36deg);}
+	.ball .line_3{border-color:#f00; -webkit-transform:rotateY(72deg);-moz-transform:rotateY(72deg);-ms-transform:rotateY(72deg);transform:rotateY(72deg);}
+	.ball .line_4{border-color:#0f0; -webkit-transform:rotateY(108deg);-moz-transform:rotateY(108deg);-ms-transform:rotateY(108deg);transform:rotateY(108deg);}
+	.ball .line_5{border-color:#0ff; -webkit-transform:rotateY(144deg);-moz-transform:rotateY(144deg);-ms-transform:rotateY(144deg);transform:rotateY(144deg);}
+	@-webkit-keyframes rotateBall{
+		0%{-webkit-transform:rotate(-20deg) rotateY(0);}
+		100%{-webkit-transform:rotate(-20deg) rotateY(360deg);}
+}
+	@-moz-keyframes rotateBall{
+		0%{-moz-transform:rotate(-20deg) rotateY(0);}
+		100%{-moz-transform:rotate(-20deg) rotateY(360deg);}
+	}
+	@-ms-keyframes rotateBall{
+		0%{-ms-transform:rotate(-20deg) rotateY(0);}
+		100%{-ms-transform:rotate(-20deg) rotateY(360deg);}
+	}
+	@keyframes rotateBall{
+		0%{transform:rotate(-20deg) rotateY(0);}
+		100%{transform:rotate(-20deg) rotateY(360deg);}
+	}
+</style>
+</head>
+
+<body>
+	<div class="wrap">
+    	<div class="ball">
+        	<div class="line_1"></div>
+            <div class="line_2"></div>
+            <div class="line_3"></div>
+            <div class="line_4"></div>
+            <div class="line_5"></div>
+        </div>
+    </div>
+</body>
+</html>

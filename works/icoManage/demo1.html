@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap{position:relative;}
+        #div1 {
+            position:relative;
+            border:1px solid #0C3;
+            width:1136px;
+            height:196px;
+            margin:200px auto;
+            overflow: hidden;
+        }
+        #div1 ul {
+            position:absolute;
+            margin:0;
+            padding:0;
+        }
+        #div1 ul li{
+            list-style:none;
+            float:left;
+            width:264px;
+            height:176px;
+            padding:10px;
+        }
+
+        #wrap .arrow a{
+            width:42px;
+            height:40px;
+            display:block;
+            border-radius:50%;
+        }
+        #wrap .arrow #left{
+            background:rgba(0,0,0,0.2) url("img/arrow.png") no-repeat 0 -44px;
+            position: absolute; top:50%; left:30px;
+            margin-top:-20px;
+        }
+        #wrap .arrow #right{
+            background:rgba(0,0,0,0.2) url("img/arrow.png") no-repeat -40px -44px;
+            position: absolute; top:50%; right:30px;
+            margin-top:-20px;
+        }
+        #wrap .arrow #left:hover{
+            background:#5fb733 url("img/arrow.png") no-repeat 0 0;
+        }
+        #wrap .arrow #right:hover{
+            background:#5fb733 url("img/arrow.png") no-repeat -40px 0;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var oDiv=document.getElementById('div1');
+            var oUl=oDiv.getElementsByTagName('ul')[0];
+            var aLi=oUl.getElementsByTagName('li');
+            var lBtn=document.getElementById('left');
+            var rBtn=document.getElementById('right');
+            oUl.innerHTML+=oUl.innerHTML;
+            oUl.style.width=aLi.length*aLi[0].offsetWidth+'px';
+            var timer=null;
+            var speed=-4;
+            FnMove();
+            function FnMove(){
+                timer=setInterval(function(){
+                    if(oUl.offsetLeft<-oUl.offsetWidth/2){
+                        oUl.style.left=0;
+                    }else if(oUl.offsetLeft>0){
+                        oUl.style.left=-oUl.offsetWidth/2+'px';
+                    }
+                    oUl.style.left=oUl.offsetLeft+speed+'px';
+                },20);
+            };
+            lBtn.onclick=function(){
+                speed=-4;
+            };
+            rBtn.onclick=function(){
+                speed=4;
+            };
+            oDiv.onmouseover=function(){
+                clearInterval(timer);
+            };
+            oDiv.onmouseout=function(){
+                FnMove();
+            };
+        };
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="div1">
+            <ul>
+                <li><img src='img/0.jpg'/></li>
+                <li><img src='img/1.jpg'/></li>
+                <li><img src='img/2.jpg'/></li>
+                <li><img src='img/3.jpg'/></li>
+            </ul>
+        </div>
+        <div class="arrow">
+            <a href="javascript:;" id="left"></a>
+            <a href="javascript:;" id="right"></a>
+        </div>
+    </div>
+</body>
+</html>
