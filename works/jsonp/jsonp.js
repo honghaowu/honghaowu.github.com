@@ -1,6 +1,4 @@
-//版权 北京智能社©, 保留所有权利
-//url,data,success,error,cbKey,timeout	==	options
-function jsonp(options){
+﻿function jsonp(options){
 	//整理options
 	options	=	options	||	{};
 	if(!options.url) return;

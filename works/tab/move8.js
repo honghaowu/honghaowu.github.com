@@ -1,6 +1,4 @@
-//版权 北京智能社©, 保留所有权利
-//time,fn		--	>optional
-function move(obj,json,optional){
+﻿function move(obj,json,optional){
 
 	optional = optional || {};//整理可选参数
 	optional.time = optional.time || 300;
