@@ -297,7 +297,22 @@
             fashArr.push(tmp);
         }, 800);
 
-        //碰撞检测
+        //碰撞检测  存在问题：宜居中国面试建议，要考虑子弹过快的问题，代码仍需优化。
+		/*function collideTest(obj){//根据中心位置检测的
+		//this ---> obj
+			var r1 = Math.abs(this.w,this.h)/2;
+			var r2 = Math.abs(obj.w,obj.h)/2;
+			
+			var a = this.x - obj.x;
+			var b = this.y - obj.y;
+			
+			var dis = Math.sqrt(a*a+b*b);
+			
+			if(dis <= (r1 + r2)*0.5){
+				return true;
+			}
+			return false;	
+		};*/
         function collideTest(x1, y1, w1, h1, x2, y2, w2, h2) {
             var r1 = x1 + w1;
             var b1 = y1 + h1;
